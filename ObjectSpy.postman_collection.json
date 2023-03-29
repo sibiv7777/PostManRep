@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "b16b39b3-7c7d-451a-a7d5-c650770109ca",
+		"name": "ObjectSpy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18511638"
+	},
+	"item": [
+		{
+			"name": "GetAllProducts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"statud code matches\",function(){\r",
+							"    pm.expect(pm.response.code).to.be.eql(200)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response time is moreThan\",function(){\r",
+							"    pm.expect(pm.response.responseTime).to.be.greaterThan(300)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-type matches\",function(){\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.be.eql(\"application/json; charset=UTF-8\")\r",
+							"});\r",
+							"\r",
+							"var res=pm.response.json();\r",
+							"pm.test(\"name matches\",function(){\r",
+							"    pm.expect(res.records[2].name).contains(\"Suresh\")\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "abc123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/read.php",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"read.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOneProducts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "abc123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json, charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/read_one.php?id=7347",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"read_one.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "7347"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create/PostAProduct",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"console.log;\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\" : \"{{name}}\",\r\n\"price\" : \"1999\",\r\n\"description\" : \"CharGPT\",\r\n\"category_id\" : 2\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/create.php",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"create.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateOneRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": \"7528\",\r\n\"name\": \"Amazing AI\",\r\n\"description\": \"CharGPT\",\r\n\"price\": \"2050\",\r\n\"category_id\": \"2\",\r\n\"category_name\": \"Electronics\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/update.php",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"update.php"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOneProduct",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"7528\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/delete.php",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"delete.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
